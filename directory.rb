@@ -23,9 +23,15 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index do |student,index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-  end
+  # gets letter to display names beginning with
+  puts "Enter a letter to display all students who's name begins with that letter"
+  # puts "To print all students just press hit return twice"
+  # get letter from user
+  letter = gets.chomp.downcase
+  # puts students.each_with_index {|student,index| puts "#{index}. #{student[:name]} #{student[:cohort]} cohort"}
+  students_letter = [] # create new array
+  students_letter = students.select{|student| student[:name][0].downcase == letter} # store students starting with letter in new array
+  students_letter.each_with_index {|student, index| puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"} # iterate over array outputting values
 end
 
 def print_footer(students)
