@@ -23,20 +23,12 @@ def print_header
 end
 
 def print(students)
-  # gets letter to display names beginning with
-  puts "Enter a letter to display all students who's name begins with that letter"
-  # puts "To print all students just press hit return twice"
-  # get letter from user
-  letter = gets.chomp.downcase
-  # puts students.each_with_index {|student,index| puts "#{index}. #{student[:name]} #{student[:cohort]} cohort"}
-  students_letter = [] # create new array
-  students_letter = students.select{|student| student[:name][0].downcase == letter} # store students starting with letter in new array
-  students_letter.each_with_index {|student, index| puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"} # iterate over array outputting values
-  puts
-  puts "Printing students with a name shorter than 12 characters"
-  students_number = []
-  students_number = students.select{|student| student[:name].length < 12}
-  students_number.each_with_index {|student, index| puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"}
+  totalstudents = students.length # setting total number of loops
+  counter = 0
+  while counter < totalstudents # while loop to loop until all students outputted
+    puts "#{counter+1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort)"
+    counter += 1
+  end
 end
 
 def print_footer(students)
