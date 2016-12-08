@@ -8,12 +8,29 @@ def input_students
   # while name is not empty, repeat this code
   while !name.empty? do
 
-      puts "Please enter the cohort of the student".center(80)
-      puts "e.g. January - If unsure just press return".center(80)
-      puts
-      studentcohort = gets.chomp.downcase.to_sym
-      studentcohort = :january if studentcohort.empty? 
+      studentcohort = ""
+      while studentcohort.empty? do
+        puts "Please enter the cohort of the student".center(80)
+        puts "e.g. January/April/July/October".center(80)
+        studentcohortcheck = gets.chomp.downcase.to_sym
+        if studentcohortcheck == :january
+          studentcohort = :january
+        elsif studentcohortcheck == :april
+          studentcohort = :april
+        elsif studentcohortcheck == :july
+          studentcohort = :july
+        elsif studentcohortcheck == :october
+          studentcohort = :october
+        else
+          puts "Did you spell the month correctly?".center(80)
+          spellcheck = gets.chomp.downcase
+          if spellcheck == "yes"
+            studentcohort = :no_valid_cohort
+          end
+        end
+      end
 
+      #studentcohort = :no_input if studentcohort.empty?
 
       puts "Please enter the country of birth of the student".center(80)
       puts
@@ -28,6 +45,7 @@ def input_students
       studenthobby = gets.chomp
 
       @students << {name: name, cohort: studentcohort, country: studentcountry, hobby: studenthobby, height: studentheight }
+
       puts
       puts "Now we have #{@students.count} students".center(80, '...')
       puts
@@ -37,14 +55,8 @@ def input_students
 
       name = gets.chomp # sets name value so loop runs again from the top
   end
-
-
-
   #return the array of students
   @students
-  puts @students
-
-
 end
 
 def print_header
