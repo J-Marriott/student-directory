@@ -32,6 +32,11 @@ def print(students)
   students_letter = [] # create new array
   students_letter = students.select{|student| student[:name][0].downcase == letter} # store students starting with letter in new array
   students_letter.each_with_index {|student, index| puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"} # iterate over array outputting values
+  puts
+  puts "Printing students with a name shorter than 12 characters"
+  students_number = []
+  students_number = students.select{|student| student[:name].length < 12}
+  students_number.each_with_index {|student, index| puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"}
 end
 
 def print_footer(students)
