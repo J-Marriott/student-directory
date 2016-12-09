@@ -103,7 +103,12 @@ end
 # nothing happens until we call the methods
 # and then print them
 students = input_students
-print_header
-printcohort(@studentscohort)
-#print(students)
-print_footer(students)
+
+if @students.count > 0
+  print_header
+  printcohort(@studentscohort)
+  #print(students)
+  print_footer(students)
+else
+  puts "No students have been added to the directory"
+end
