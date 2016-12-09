@@ -7,12 +7,12 @@ def input_students
   name = gets.chomp
   # while name is not empty, repeat this code
   while !name.empty? do
-
       studentcohort = ""
       while studentcohort.empty? do
         puts "Please enter the cohort of the student".center(80)
         puts "e.g. January/April/July/November".center(80)
-        studentcohortcheck = gets.chomp.downcase.to_sym
+        cohortresponse = gets.chomp.downcase.to_sym
+        studentcohortcheck = cohortresponse
         if studentcohortcheck == :january
           studentcohort = :january
         elsif studentcohortcheck == :april
@@ -72,6 +72,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 
@@ -81,6 +82,8 @@ def process(selection)
     input_students
   when "2"
     show_students
+  when "3"
+    save_students
   when "9"
     exit # this will cause the rogram to terminate
   else
@@ -93,6 +96,18 @@ def show_students
   #printcohort(@studentscohort)
   print_student_list
   print_footer
+end
+
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(", ")
+    file.puts csv_line
+  end
+  file.close
 end
 
 def print_header
