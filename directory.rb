@@ -135,6 +135,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "The list has been saved"
 end
 
 def load_students(filename = "students.csv")
@@ -144,6 +145,7 @@ def load_students(filename = "students.csv")
     add_to_list
   end
   file.close
+  puts "The list has been loaded and there are #{@students.count} students in the list"
 end
 
 def try_load_students
