@@ -1,31 +1,29 @@
 @students = []
 def input_students
-  puts "Welcome to the student directory".center(80)
-  puts
   puts "Please enter the name of the student you are adding ".center(80)
   puts "....".center(80, '...')
   @name = STDIN.gets.chomp
   # while name is not empty, repeat this code
   while !@name.empty? do
-      cohort = ""
-      while cohort.empty? do
+      @cohort = ""
+      while @cohort.empty? do
         puts "Please enter the cohort of the student".center(80)
         puts "e.g. January/April/July/November".center(80)
         cohortresponse = STDIN.gets.chomp.downcase
         cohortcheck = cohortresponse
         if cohortcheck == "january"
-          cohort = "january"
+          @cohort = "january"
         elsif cohortcheck == "april"
-          cohort = "april"
+          @cohort = "april"
         elsif cohortcheck == "july"
-          cohort = "july"
+          @cohort = "july"
         elsif cohortcheck == "november"
-          cohort = "november"
+          @cohort = "november"
         else
           puts "Did you spell the month correctly?".center(80)
           spellcheck = STDIN.gets.chomp.downcase
           if spellcheck == "yes"
-            cohort = "no_valid_cohort"
+            @cohort = "no_valid_cohort"
           end
         end
       end
@@ -60,6 +58,9 @@ def interactive_menu
 end
 
 def print_menu
+  puts
+  puts "Villains Academy Student Directory".center(80)
+  puts "...".center(80, "...")
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
@@ -146,6 +147,11 @@ def load_students(filename = "students.csv")
 end
 
 def try_load_students
+  if ARGV.first == nil
+    load_students
+    puts "\nstudents.csv loaded"
+    puts "#{@students.count} students in the list\n\n"
+  end
   filename = ARGV.first # first argument from command line
   return if filename.nil? # get out of the method if it isn't given
   if File.exists?(filename) # if it exists
@@ -157,24 +163,7 @@ def try_load_students
   end
 end
 
-=begin
-def printcohort(students)
-  @studentscohort = @students.sort_by {|student| student[:cohort]}
-  totalstudents = @studentscohort.length # setting total number of loops
-  counter = 0
-  while counter < totalstudents # while loop to loop until all students outputted
-    puts "#{counter+1}. #{@studentscohort[counter][:name]} (#{@studentscohort[counter][:cohort]} cohort)".center(80)
-    counter += 1
-    puts
-  end
-end
-=end
-
-
-
-
 # nothing happens until we call the methods
 # and then print them
 try_load_students
 interactive_menu
-#students = input_students
