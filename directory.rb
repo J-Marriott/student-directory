@@ -47,7 +47,12 @@ def input_students
       @students << {name: name, cohort: studentcohort, country: studentcountry, hobby: studenthobby, height: studentheight }
 
       puts
-      puts "Now we have #{@students.count} students".center(80, '...')
+      if @students.count != 1
+        puts "Now we have #{@students.count} students".center(80, '...')
+      else
+        puts "Now we have #{@students.count} student".center(80, '...')
+      end
+
       puts
       puts "If you would like to add another student, type their name and press return,".center(80)
       puts "or just press return to continue".center(80)
@@ -87,7 +92,11 @@ def printcohort(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{@students.count} great students"
+  if @students.count != 1
+    puts "Overall, we have #{@students.count} great students"
+  else
+    puts "Overall, we have #{@students.count} great student"
+  end
 end
 
 
