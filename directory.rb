@@ -63,8 +63,8 @@ def print_menu
   puts "...".center(80, "...")
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list"
+  puts "4. Load a list"
   puts "9. Exit"
 end
 
@@ -125,9 +125,9 @@ def print_footer
   end
 end
 
-def save_students
+def save_students(filename = ask_filename)
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -138,7 +138,7 @@ def save_students
   puts "The list has been saved"
 end
 
-def load_students(filename = "students.csv")
+def load_students(filename = ask_filename)
   file = File.open(filename, "r")
   file.readlines.each do |line|
   @name, @cohort = line.chomp.split(',')
@@ -150,7 +150,7 @@ end
 
 def try_load_students
   if ARGV.first == nil
-    load_students
+    load_students("students.csv")
     puts "\nstudents.csv loaded"
     puts "#{@students.count} students in the list\n\n"
   end
@@ -163,6 +163,11 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
   end
+end
+
+def ask_filename
+  puts "What is the full filename you wish to use?"
+  @filename = STDIN.gets.chomp
 end
 
 # nothing happens until we call the methods
