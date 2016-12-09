@@ -4,9 +4,9 @@ def input_students
   puts
   puts "Please enter the name of the student you are adding ".center(80)
   puts "....".center(80, '...')
-  name = STDIN.gets.chomp
+  @name = STDIN.gets.chomp
   # while name is not empty, repeat this code
-  while !name.empty? do
+  while !@name.empty? do
       cohort = ""
       while cohort.empty? do
         puts "Please enter the cohort of the student".center(80)
@@ -25,12 +25,12 @@ def input_students
           puts "Did you spell the month correctly?".center(80)
           spellcheck = STDIN.gets.chomp.downcase
           if spellcheck == "yes"
-            cohort = no_valid_cohort
+            cohort = "no_valid_cohort"
           end
         end
       end
 
-      @students << {name: name, cohort: cohort.to_sym}
+      add_to_list
 
       puts
       if @students.count != 1
@@ -44,8 +44,12 @@ def input_students
       puts "or just press return to continue".center(80)
       puts ".................................".center(80, '...')
 
-      name = STDIN.gets.chomp # sets name value so loop runs again from the top
+      @name = STDIN.gets.chomp # sets name value so loop runs again from the top
   end
+end
+
+def add_to_list
+  @students << {name: @name, cohort: @cohort.to_sym}
 end
 
 def interactive_menu
@@ -135,8 +139,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  @name, @cohort = line.chomp.split(',')
+    add_to_list
   end
   file.close
 end
