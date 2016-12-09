@@ -1,28 +1,4 @@
 @students = []
-def interactive_menu
-  loop do
-    puts "1. Input the students \n2. Show the students \n9. Exit"
-    selection = gets.chomp
-    case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "9"
-      exit # this will cause the rogram to terminate
-    else
-      puts "I don't know what you meant, try again"
-    end
-  end
-end
-
-def show_students
-  print_header
-  #printcohort(@studentscohort)
-  print_student_list
-  print_footer
-end
-
 def input_students
   puts "Welcome to the student directory".center(80)
   puts
@@ -86,6 +62,39 @@ def input_students
   end
 end
 
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit # this will cause the rogram to terminate
+  else
+    puts "I don't know what you meant, try again"
+  end
+end
+
+def show_students
+  print_header
+  #printcohort(@studentscohort)
+  print_student_list
+  print_footer
+end
+
 def print_header
   if @students.empty?
     puts
@@ -109,6 +118,16 @@ def print_student_list
   end
 end
 
+def print_footer
+  if @students.empty?
+    puts "No students have been added to the directory"
+  elsif @students.count != 1
+    puts "Overall, we have #{@students.count} great students"
+  else
+    puts "Overall, we have #{@students.count} great student"
+  end
+end
+
 =begin
 def printcohort(students)
   @studentscohort = @students.sort_by {|student| student[:cohort]}
@@ -122,15 +141,7 @@ def printcohort(students)
 end
 =end
 
-def print_footer
-  if @students.empty?
-    puts "No students have been added to the directory"
-  elsif @students.count != 1
-    puts "Overall, we have #{@students.count} great students"
-  else
-    puts "Overall, we have #{@students.count} great student"
-  end
-end
+
 
 
 # nothing happens until we call the methods
