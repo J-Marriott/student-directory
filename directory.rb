@@ -4,14 +4,14 @@ def input_students
   puts
   puts "Please enter the name of the student you are adding ".center(80)
   puts "....".center(80, '...')
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # while name is not empty, repeat this code
   while !name.empty? do
       studentcohort = ""
       while studentcohort.empty? do
         puts "Please enter the cohort of the student".center(80)
         puts "e.g. January/April/July/November".center(80)
-        cohortresponse = gets.chomp.downcase.to_sym
+        cohortresponse = STDIN.gets.chomp.downcase.to_sym
         studentcohortcheck = cohortresponse
         if studentcohortcheck == :january
           studentcohort = :january
@@ -23,7 +23,7 @@ def input_students
           studentcohort = :november
         else
           puts "Did you spell the month correctly?".center(80)
-          spellcheck = gets.chomp.downcase
+          spellcheck = STDIN.gets.chomp.downcase
           if spellcheck == "yes"
             studentcohort = :no_valid_cohort
           end
@@ -34,15 +34,15 @@ def input_students
 
       puts "Please enter the country of birth of the student".center(80)
       puts
-      studentcountry = gets.chomp
+      studentcountry = STDIN.gets.chomp
 
       puts "Please enter the height of the student in cm".center(80)
       puts
-      studentheight = gets.chomp
+      studentheight = STDIN.gets.chomp
 
       puts "Please enter a hobby of the student".center(80)
       puts
-      studenthobby = gets.chomp
+      studenthobby = STDIN.gets.chomp
 
       @students << {name: name, cohort: studentcohort, country: studentcountry, hobby: studenthobby, height: studentheight }
 
@@ -58,14 +58,14 @@ def input_students
       puts "or just press return to continue".center(80)
       puts ".................................".center(80, '...')
 
-      name = gets.chomp # sets name value so loop runs again from the top
+      name = STDIN.gets.chomp # sets name value so loop runs again from the top
   end
 end
 
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -101,29 +101,6 @@ def show_students
   print_footer
 end
 
-def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
-end
-
-def load_students
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
-  end
-  file.close
-end
-
-
-
 def print_header
   if @students.empty?
     puts
@@ -157,6 +134,39 @@ def print_footer
   end
 end
 
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+  name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
+def try_load_students
+  filename = ARGV.first # first argument from command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
 =begin
 def printcohort(students)
   @studentscohort = @students.sort_by {|student| student[:cohort]}
@@ -175,5 +185,6 @@ end
 
 # nothing happens until we call the methods
 # and then print them
+try_load_students
 interactive_menu
 #students = input_students
