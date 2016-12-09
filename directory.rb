@@ -1,23 +1,26 @@
 @students = []
 def interactive_menu
   loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
+    puts "1. Input the students \n2. Show the students \n9. Exit"
     selection = gets.chomp
     case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
-      print_header
-      print(students)
-      print_footer(students)
+      show_students
     when "9"
       exit # this will cause the rogram to terminate
     else
       puts "I don't know what you meant, try again"
     end
   end
+end
+
+def show_students
+  print_header
+  #printcohort(@studentscohort)
+  print_student_list
+  print_footer
 end
 
 def input_students
@@ -81,8 +84,6 @@ def input_students
 
       name = gets.chomp # sets name value so loop runs again from the top
   end
-  #return the array of students
-  @students
 end
 
 def print_header
@@ -94,7 +95,7 @@ def print_header
   end
 end
 
-def print(students)
+def print_student_list
   if @students.empty?
     puts
   else
@@ -108,7 +109,7 @@ def print(students)
   end
 end
 
-
+=begin
 def printcohort(students)
   @studentscohort = @students.sort_by {|student| student[:cohort]}
   totalstudents = @studentscohort.length # setting total number of loops
@@ -119,8 +120,9 @@ def printcohort(students)
     puts
   end
 end
+=end
 
-def print_footer(students)
+def print_footer
   if @students.empty?
     puts "No students have been added to the directory"
   elsif @students.count != 1
@@ -134,13 +136,4 @@ end
 # nothing happens until we call the methods
 # and then print them
 interactive_menu
-students = input_students
-
-if @students.count > 0
-  print_header
-  printcohort(@studentscohort)
-  #print(students)
-  print_footer(students)
-else
-  puts "No students have been added to the directory"
-end
+#students = input_students
