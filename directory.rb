@@ -7,44 +7,30 @@ def input_students
   name = STDIN.gets.chomp
   # while name is not empty, repeat this code
   while !name.empty? do
-      studentcohort = ""
-      while studentcohort.empty? do
+      cohort = ""
+      while cohort.empty? do
         puts "Please enter the cohort of the student".center(80)
         puts "e.g. January/April/July/November".center(80)
-        cohortresponse = STDIN.gets.chomp.downcase.to_sym
-        studentcohortcheck = cohortresponse
-        if studentcohortcheck == :january
-          studentcohort = :january
-        elsif studentcohortcheck == :april
-          studentcohort = :april
-        elsif studentcohortcheck == :july
-          studentcohort = :july
-        elsif studentcohortcheck == :november
-          studentcohort = :november
+        cohortresponse = STDIN.gets.chomp.downcase
+        cohortcheck = cohortresponse
+        if cohortcheck == "january"
+          cohort = "january"
+        elsif cohortcheck == "april"
+          cohort = "april"
+        elsif cohortcheck == "july"
+          cohort = "july"
+        elsif cohortcheck == "november"
+          cohort = "november"
         else
           puts "Did you spell the month correctly?".center(80)
           spellcheck = STDIN.gets.chomp.downcase
           if spellcheck == "yes"
-            studentcohort = :no_valid_cohort
+            cohort = no_valid_cohort
           end
         end
       end
 
-      #studentcohort = :no_input if studentcohort.empty?
-
-      puts "Please enter the country of birth of the student".center(80)
-      puts
-      studentcountry = STDIN.gets.chomp
-
-      puts "Please enter the height of the student in cm".center(80)
-      puts
-      studentheight = STDIN.gets.chomp
-
-      puts "Please enter a hobby of the student".center(80)
-      puts
-      studenthobby = STDIN.gets.chomp
-
-      @students << {name: name, cohort: studentcohort, country: studentcountry, hobby: studenthobby, height: studentheight }
+      @students << {name: name, cohort: cohort.to_sym}
 
       puts
       if @students.count != 1
@@ -117,7 +103,7 @@ def print_student_list
     totalstudents = @students.length # setting total number of loops
     counter = 0
     while counter < totalstudents # while loop to loop until all students outputted
-      puts "#{counter+1}. #{@students[counter][:name]} (#{@students[counter][:cohort]} cohort), Birthplace: #{@students[counter][:country]}, Height: #{@students[counter][:height]}cm, Hobby: #{@students[counter][:hobby]}.".center(80)
+      puts "#{counter+1}. #{@students[counter][:name]} (#{@students[counter][:cohort]} cohort)".center(80)
       counter += 1
       puts
     end
@@ -173,7 +159,7 @@ def printcohort(students)
   totalstudents = @studentscohort.length # setting total number of loops
   counter = 0
   while counter < totalstudents # while loop to loop until all students outputted
-    puts "#{counter+1}. #{@studentscohort[counter][:name]} (#{@studentscohort[counter][:cohort]} cohort), Birthplace: #{@studentscohort[counter][:country]}, Height: #{@studentscohort[counter][:height]}cm, Hobby: #{@studentscohort[counter][:hobby]}.".center(80)
+    puts "#{counter+1}. #{@studentscohort[counter][:name]} (#{@studentscohort[counter][:cohort]} cohort)".center(80)
     counter += 1
     puts
   end
