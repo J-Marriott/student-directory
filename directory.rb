@@ -1,5 +1,5 @@
+@students = []
 def interactive_menu
-  students =[]
   loop do
     puts "1. Input the students"
     puts "2. Show the students"
@@ -21,7 +21,6 @@ def interactive_menu
 end
 
 def input_students
-  @students = [] # creates empty array
   puts "Welcome to the student directory".center(80)
   puts
   puts "Please enter the name of the student you are adding ".center(80)
@@ -87,17 +86,25 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy".center(80)
-  puts "-------------".center(80)
+  if @students.empty?
+    puts
+  else
+    puts "The students of Villains Academy".center(80)
+    puts "-------------".center(80)
+  end
 end
 
 def print(students)
-  totalstudents = @students.length # setting total number of loops
-  counter = 0
-  while counter < totalstudents # while loop to loop until all students outputted
-    puts "#{counter+1}. #{@students[counter][:name]} (#{@students[counter][:cohort]} cohort), Birthplace: #{@students[counter][:country]}, Height: #{@students[counter][:height]}cm, Hobby: #{@students[counter][:hobby]}.".center(80)
-    counter += 1
+  if @students.empty?
     puts
+  else
+    totalstudents = @students.length # setting total number of loops
+    counter = 0
+    while counter < totalstudents # while loop to loop until all students outputted
+      puts "#{counter+1}. #{@students[counter][:name]} (#{@students[counter][:cohort]} cohort), Birthplace: #{@students[counter][:country]}, Height: #{@students[counter][:height]}cm, Hobby: #{@students[counter][:hobby]}.".center(80)
+      counter += 1
+      puts
+    end
   end
 end
 
@@ -114,7 +121,9 @@ def printcohort(students)
 end
 
 def print_footer(students)
-  if @students.count != 1
+  if @students.empty?
+    puts "No students have been added to the directory"
+  elsif @students.count != 1
     puts "Overall, we have #{@students.count} great students"
   else
     puts "Overall, we have #{@students.count} great student"
