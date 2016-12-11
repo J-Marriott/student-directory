@@ -11,21 +11,7 @@ def input_students
         puts "e.g. January/April/July/November".center(80)
         cohortresponse = STDIN.gets.chomp.downcase
         cohortcheck = cohortresponse
-        if cohortcheck == "january"
-          @cohort = "january"
-        elsif cohortcheck == "april"
-          @cohort = "april"
-        elsif cohortcheck == "july"
-          @cohort = "july"
-        elsif cohortcheck == "november"
-          @cohort = "november"
-        else
-          puts "Did you spell the month correctly?".center(80)
-          spellcheck = STDIN.gets.chomp.downcase
-          if spellcheck == "yes"
-            @cohort = "no_valid_cohort"
-          end
-        end
+        cohortchecker(cohortcheck)
       end
 
       add_to_list
@@ -111,6 +97,21 @@ def print_student_list
       puts "#{counter+1}. #{@students[counter][:name]} (#{@students[counter][:cohort]} cohort)".center(80)
       counter += 1
       puts
+    end
+  end
+end
+
+def cohortchecker(cohortcheck)
+  case cohortcheck
+  when "january" then @cohort = "january"
+  when "april" then @cohort = "april"
+  when "july" then @cohort = "july"
+  when "november" then @cohort = "november"
+  else
+    puts "Did you spell the month correctly?".center(80)
+    spellcheck = STDIN.gets.chomp.downcase
+    if spellcheck == "yes"
+      @cohort = "no_valid_cohort"
     end
   end
 end
